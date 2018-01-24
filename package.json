@@ -1,0 +1,20 @@
+{
+    "name": "fentertainment",
+    "version": "1.0.0",
+    "homepage": "https://github.com/fCommunity/fEntertainment",
+    "bugs": "https://github.com/fCommunity/fEntertainment/issues",
+    "license": "MIT",
+    "author": "Jqmey <jqmey@outlook.com> (https://github.com/Jqmey)",
+    "main": "server.js",
+    "repository": "fCommunity/fEntertainment",
+    "dependencies": {
+        "api-fcraft.pl": "^1.4.4",
+        "discord.js": "^11.3.0",
+        "http-as-promised": "^2.0.1",
+        "moment": "^2.20.1"
+    },
+    "engines": {
+        "node": ">=8.9.4"
+    },
+    "private": true
+}

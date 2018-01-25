@@ -8,4 +8,4 @@
 `!serwer [serwer]` - wyświetla informacje nt. podanego serwera
 
 **Rozrywkowe**
-`!rzućkoścmi [liczba kości] [liczba ścian]` - rzuca koścmi i wyświetla wyniki
+`!rzut [liczba kości] [liczba ścian]` - rzuca koścmi i wyświetla wyniki

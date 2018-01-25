@@ -46,8 +46,7 @@ client.on('message', message => {
             message.channel.startTyping();
             serverInfo(message);
             break;
-        case '!rzućkośćmi':
-        case '!rzuckoscmi':
+        case '!rzut':
             message.channel.startTyping();
             diceRoll(message);
             break;

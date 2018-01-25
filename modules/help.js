@@ -15,7 +15,7 @@ module.exports = async (message) => {
         embed.setDescription(help);
         embed.setTitle('Lista komend');
 
-        message.member.send(embed).then(privateMessage => {
+        message.author.send(embed).then(privateMessage => {
             message.reply('wysłano pomoc poprzez wiadomość prywatną!');
         }).catch(error => {
             message.reply('nie można było wysłać pomocy poprzez wiadomość prywatną!');

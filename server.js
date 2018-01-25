@@ -16,14 +16,19 @@ const config = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.json')));
 const client = new Discord.Client();
 
 client.on('ready', () => {
+    client.user.setActivity('!pomoc');
     console.log('Client is ready!');
 });
 
 client.on('message', message => {
     const args = message.content.split(/\s+/);
 
-    switch(args[0]) {
+    switch(args[0].toLowerCase()) {
         case '!pomoc':
+            message.channel.startTyping();
+            help(message);
+            break;
+        case '!help':
             message.channel.startTyping();
             help(message);
             break;

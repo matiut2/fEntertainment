@@ -6,6 +6,8 @@ const path = require('path');
 const apifcraftpl = require('api-fcraft.pl');
 const Discord = require('discord.js');
 
+const utils = require(path.join(__dirname, '..', 'utils.js'));
+
 const config = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'config.json')));
 
 const apiClient = new apifcraftpl(config.key);
@@ -17,12 +19,13 @@ module.exports = async (message) => {
         if(!args[1]) {
             message.reply('prawidłowe użycie: `!cuboid <cuboid> [świat] [serwer]`!');
         } else {
-            apiClient.cuboid((args[3] ? args[3] : 'hard'), (args[2] ? args[2] : 'world'), args[1]).then(async (cuboid) => {
+            apiClient.cuboid((args[3] ? args[3].toLowerCase() : 'hard'), (args[2] ? args[2].toLowerCase() : 'world'), args[1].toLowerCase()).then(async (cuboid) => {
                 const embed = new Discord.RichEmbed();
                 embed.setAuthor('fEntertainment', 'https://cdn.fcraft.pl/logo/150px/v2.2.png');
                 embed.setColor('FFF000');
                 embed.addField('Cuboid', cuboid.name);
-                embed.addField('Rodzaj', (cuboid.type === 'cuboid' ? 'Cuboid' : 'Poligon'));
+                embed.addField('Świat', (args[2] ? utils.capitalize(args[2].toLowerCase()) : 'World'));
+                embed.addField('Rodzaj', (cuboid.type === 'cuboid' ? 'Prostopadłościan' : 'Wielokąt'));
 
                 if(cuboid.parent) {
                     embed.addField('Rodzic', cuboid.parent);
@@ -53,6 +56,7 @@ module.exports = async (message) => {
 
                 message.channel.send(embed);
             }).catch(error => {
+                console.error(error);
                 message.reply('nie można było uzyskać informacji nt. podanego cuboida!');
             });
         }

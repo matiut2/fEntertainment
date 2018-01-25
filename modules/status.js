@@ -15,7 +15,7 @@ module.exports = async (message) => {
             embed.setAuthor('fEntertainment', 'https://cdn.fcraft.pl/logo/150px/v2.2.png');
             embed.setColor('FFF000');
             embed.addField('Status', 'Online');
-            embed.addField('Gracze', serverStatus.players.list.join(', '));
+            embed.addField('Gracze', (serverStatus.players.list[0] ? serverStatus.players.list.join(', ') : '_Brak_'));
             embed.setFooter('Inne usługi: status.fDomain.pl');
 
             message.channel.send(embed);

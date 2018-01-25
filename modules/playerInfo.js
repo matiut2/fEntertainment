@@ -7,8 +7,6 @@ const apifcraftpl = require('api-fcraft.pl');
 const Discord = require('discord.js');
 const moment = require('moment');
 
-const utils = require(path.join(__dirname, '..', 'utils.js'));
-
 const config = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'config.json')));
 
 const apiClient = new apifcraftpl(config.key);

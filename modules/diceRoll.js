@@ -35,14 +35,16 @@ module.exports = async (message) => {
             results.push(Random.integer(1, sides)(Random.engines.nativeMath));
         }
 
-        const randomNumber = Random.integer(1, 6)(Random.engines.nativeMath);
-
         const embed = new Discord.RichEmbed();
         embed.setAuthor('fEntertainment', 'https://cdn.fcraft.pl/logo/150px/v2.2.png');
         embed.setColor('FFF000');
         embed.addField('Rzuty', rolls, true);
         embed.addField('Strony', sides, true);
         embed.addField('Otrzymane wyniki', results.join(', '));
+
+        const resultsSum = results.reduce((a, b) => a + b);
+
+        embed.addField('Suma wyników', resultsSum);
 
         message.channel.send(embed);
     } catch(error) {

@@ -22,8 +22,8 @@ module.exports = async (message) => {
             embed.setAuthor('fEntertainment', 'https://cdn.fcraft.pl/logo/150px/v2.2.png');
             embed.setColor('FFF000');
             embed.setThumbnail(server.logo.large);
-            embed.addField('Serwer', (args[1] ? utils.capitalize(args[1].toLowerCase()) : 'Hard'));
-            embed.addField('Wersja gry', server.version.minecraft.number);
+            embed.addField('Serwer', (args[1] ? utils.capitalize(args[1].toLowerCase()) : 'Hard'), true);
+            embed.addField('Wersja gry', server.version.minecraft.number, true);
 
             let version = `v${server.version.world.number}.${server.version.series.number}.${server.version.update.number}`;
 
@@ -31,9 +31,10 @@ module.exports = async (message) => {
                 version += `.${server.version.patch.number}`;
             }
 
-            embed.addField('Wersja serwera', `[${version}](https://wiki.fCraft.pl/${version})`);
-            embed.addField('Nazwa aktualizacji', server.version.update.name);
-            embed.addField('Ostatnia aktualizacja', moment((server.version.patch ? server.version.patch.time * 1000 : server.version.update.time * 1000)).format('D.MM.YYYY'));
+            embed.addField('Wersja serwera', `[${version}](https://wiki.fCraft.pl/${version})`, true);
+            embed.addField('Nazwa aktualizacji', server.version.update.name, true);
+            embed.addField('Ostatnia aktualizacja', moment((server.version.patch ? server.version.patch.time * 1000 : server.version.update.time * 1000)).format('D.MM.YYYY'), true);
+            embed.addField('Ostatnia zmiana mapy', moment(server.version.world.time * 1000).format('D.MM.YYYY'), true);
 
             message.channel.send(embed);
         }).catch(error => {

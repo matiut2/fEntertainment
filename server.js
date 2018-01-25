@@ -6,6 +6,7 @@ const path = require('path');
 const Discord = require('discord.js');
 
 const cuboidInfo = require(path.join(__dirname, 'modules', 'cuboidInfo.js'));
+const diceRoll = require(path.join(__dirname, 'modules', 'diceRoll.js'));
 const help = require(path.join(__dirname, 'modules', 'help.js'));
 const playerInfo = require(path.join(__dirname, 'modules', 'playerInfo.js'));
 const serverInfo = require(path.join(__dirname, 'modules', 'serverInfo.js'));
@@ -25,9 +26,6 @@ client.on('message', message => {
 
     switch(args[0].toLowerCase()) {
         case '!pomoc':
-            message.channel.startTyping();
-            help(message);
-            break;
         case '!help':
             message.channel.startTyping();
             help(message);
@@ -47,6 +45,11 @@ client.on('message', message => {
         case '!serwer':
             message.channel.startTyping();
             serverInfo(message);
+            break;
+        case '!rzućkośćmi':
+        case '!rzuckoscmi':
+            message.channel.startTyping();
+            diceRoll(message);
             break;
     }
 });

@@ -31,7 +31,8 @@ module.exports = async (message) => {
                 version += `.${server.version.patch.number}`;
             }
 
-            embed.addField('Wersja serwera', `[${version} - ${server.version.update.name}](https://wiki.fCraft.pl/${version})`);
+            embed.addField('Wersja serwera', `[${version}](https://wiki.fCraft.pl/${version})`);
+            embed.addField('Nazwa aktualizacji', server.version.update.name);
             embed.addField('Ostatnia aktualizacja', moment((server.version.patch ? server.version.patch.time * 1000 : server.version.update.time * 1000)).format('D.MM.YYYY'));
 
             message.channel.send(embed);

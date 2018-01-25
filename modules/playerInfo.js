@@ -18,18 +18,26 @@ module.exports = async (message) => {
         if(!args[1]) {
             message.reply('prawidłowe użycie: `!gracz <gracz>`!');
         } else {
-            apiClient.globalPlayer(args[1]).then(player => {
+            apiClient.globalPlayer(args[1]).then(async (player) => {
                 const embed = new Discord.RichEmbed();
                 embed.setAuthor('fEntertainment', 'https://cdn.fcraft.pl/logo/150px/v2.2.png');
                 embed.setColor('FFF000');
                 embed.setThumbnail(`https://api.fcraft.pl/player/${args[1]}/head?size=16`);
-                embed.addField('Gracz', args[1]);
-                embed.addField('Konto', (player.premium.last ? 'Oryginalne' : 'Pirackie'));
-                embed.addField('Pierwsze wejście', moment(player.time.first * 1000).format('D.MM.YYYY H:mm'));
-                embed.addField('Ostatnie wejście', moment(player.time.last * 1000).format('D.MM.YYYY H:mm'));
+                embed.addField('Gracz', args[1], true);
+                embed.addField('Konto', (player.premium.last ? 'Oryginalne' : 'Pirackie'), true);
+                embed.addField('Pierwsze wejście', moment(player.time.first * 1000).format('D.MM.YYYY H:mm'), true);
+                embed.addField('Ostatnie wejście', moment(player.time.last * 1000).format('D.MM.YYYY H:mm'), true);
 
                 const isActive = moment(player.time.last * 1000).isSameOrAfter(moment().subtract(30, 'days'));
-                embed.addField('Aktywny', (isActive ? 'Tak' : 'Nie'));
+                embed.addField('Aktywny', (isActive ? 'Tak' : 'Nie'), true);
+
+                const bans = await apiClient.banList();
+
+                if(bans.find(ban => ban.uuid === player.uuid)) {
+                    embed.addField('Zbanowany', 'Tak', true);
+                } else {
+                    embed.addField('Zbanowany', 'Nie', true);
+                }
 
                 message.channel.send(embed);
             }).catch(error => {

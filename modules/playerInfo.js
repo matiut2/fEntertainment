@@ -7,6 +7,8 @@ const apifcraftpl = require('api-fcraft.pl');
 const Discord = require('discord.js');
 const moment = require('moment');
 
+const utils = require(path.join(__dirname, '..', 'utils.js'));
+
 const config = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'config.json')));
 
 const apiClient = new apifcraftpl(config.key);
@@ -23,7 +25,7 @@ module.exports = async (message) => {
                 embed.setAuthor('fEntertainment', 'https://cdn.fcraft.pl/logo/150px/v2.2.png');
                 embed.setColor('FFF000');
                 embed.setThumbnail(`https://api.fcraft.pl/player/${args[1]}/head?size=16`);
-                embed.addField('Gracz', args[1], true);
+                embed.addField('Gracz', utils.escapeMarkdown(args[1]), true);
                 embed.addField('Konto', (player.premium.last ? 'Oryginalne' : 'Pirackie'), true);
                 embed.addField('Pierwsze wejście', moment(player.time.first * 1000).format('D.MM.YYYY H:mm'), true);
                 embed.addField('Ostatnie wejście', moment(player.time.last * 1000).format('D.MM.YYYY H:mm'), true);

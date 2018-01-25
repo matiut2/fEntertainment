@@ -1,9 +1,12 @@
 'use strict';
 
+const path = require('path');
 const util = require('util');
 
 const httpAsPromised = require('http-as-promised');
 const Discord = require('discord.js');
+
+const utils = require(path.join(__dirname, '..', 'utils.js'));
 
 module.exports = async (message) => {
     try {
@@ -17,11 +20,11 @@ module.exports = async (message) => {
             embed.addField('Status', 'Online', true);
 
             if(serverStatus.players.list.length < 3) {
-                embed.addField('Gracze', (serverStatus.players.list[0] ? serverStatus.players.list.join(', ') : '_Brak_'), true);
+                embed.addField('Gracze', (serverStatus.players.list[0] ? utils.escapeMarkdown(serverStatus.players.list.join(', ')) : '_Brak_'), true);
             } else {
-                embed.addField('Gracze', serverStatus.players.list.join(', '));
+                embed.addField('Gracze', utils.escapeMarkdown(serverStatus.players.list.join(', ')));
             }
-            
+
             embed.setFooter('Inne usługi: status.fDomain.pl');
 
             message.channel.send(embed);

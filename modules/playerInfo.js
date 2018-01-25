@@ -28,6 +28,9 @@ module.exports = async (message) => {
                 embed.addField('Pierwsze wejście', moment(player.time.first * 1000).format('D.MM.YYYY H:mm'));
                 embed.addField('Ostatnie wejście', moment(player.time.last * 1000).format('D.MM.YYYY H:mm'));
 
+                const isActive = moment(player.time.last * 1000).isSameOrAfter(moment().subtract(30, 'days'));
+                embed.addField('Aktywny', (isActive ? 'Tak' : 'Nie'));
+
                 message.channel.send(embed);
             }).catch(error => {
                 message.reply('nie można było uzyskać informacji nt. podanego gracza!');

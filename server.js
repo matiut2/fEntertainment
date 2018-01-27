@@ -17,7 +17,7 @@ const config = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.json')));
 const client = new Discord.Client();
 
 client.on('ready', () => {
-    client.user.setActivity('!pomoc | v1.0.3');
+    client.user.setActivity('!pomoc | v1.0.4');
     console.log('Client is ready!');
 });
 

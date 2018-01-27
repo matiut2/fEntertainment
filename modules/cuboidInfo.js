@@ -5,6 +5,7 @@ const path = require('path');
 
 const apifcraftpl = require('api-fcraft.pl');
 const Discord = require('discord.js');
+const moment = require('moment');
 
 const utils = require(path.join(__dirname, '..', 'utils.js'));
 
@@ -39,20 +40,37 @@ module.exports = async (message) => {
                     embed.addField('Rodzic', utils.escapeMarkdown(cuboid.parent));
                 }
 
+                let players = [];
+
                 if(cuboid.owners[0]) {
-                    const owners = await apiClient.resolverUuids(cuboid.owners);
-                    embed.addField('Posiadacze', utils.escapeMarkdown(Object.values(owners).join(', ')));
+                    const owners = Object.values(await apiClient.resolverUuids(cuboid.owners));
+                    players = [...players, ...owners];
+                    embed.addField('Posiadacze', utils.escapeMarkdown(owners.join(', ')));
                 }
 
                 if(cuboid.members[0]) {
-                    const members = await apiClient.resolverUuids(cuboid.members);
-                    embed.addField('Mieszkańcy', utils.escapeMarkdown(Object.values(members).join(', ')));
+                    const members = Object.values(await apiClient.resolverUuids(cuboid.members));
+                    players = [...players, ...members];
+                    embed.addField('Mieszkańcy', utils.escapeMarkdown(members.join(', ')));
                 }
 
                 if(cuboid.workers[0]) {
-                    const workers = await apiClient.resolverUuids(cuboid.workers);
-                    embed.addField('Pracownicy', utils.escapeMarkdown(Object.values(workers).join(', ')));
+                    const workers = Object.values(await apiClient.resolverUuids(cuboid.workers));
+                    embed.addField('Pracownicy', utils.escapeMarkdown(workers.join(', ')));
                 }
+
+                let active = false;
+
+                for(let i = 0; i < players.length; i++) {
+                    const player = await apiClient.globalPlayer(players[i]);
+                    const isActive = moment(player.time.last * 1000).isSameOrAfter(moment().subtract(30, 'days'));
+
+                    if(isActive) {
+                        active = true;
+                    }
+                }
+
+                embed.addField('Możliwa rozbiórka', (active ? 'Nie' : 'Tak'));
 
                 message.channel.send(embed);
             }).catch(error => {

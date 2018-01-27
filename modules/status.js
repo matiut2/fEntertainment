@@ -15,7 +15,7 @@ module.exports = async (message) => {
 
         if(serverStatus.online) {
             const embed = new Discord.RichEmbed();
-            embed.setAuthor('fEntertainment', 'https://cdn.fcraft.pl/logo/150px/v2.2.png');
+            embed.setAuthor('Status serwera', 'https://wiki.fcraft.pl/images/5/52/Ekonomia.png');
             embed.setColor('FFF000');
             embed.addField('Status', 'Online', true);
 

@@ -10,10 +10,9 @@ const help = fs.readFileSync(path.join(__dirname, '..', 'assets', 'help.md'), 'u
 module.exports = async (message) => {
     try {
         const embed = new Discord.RichEmbed();
-        embed.setAuthor('fEntertainment', 'https://cdn.fcraft.pl/logo/150px/v2.2.png');
+        embed.setAuthor('Pomoc bota', 'https://wiki.fcraft.pl/images/6/60/Survival.png');
         embed.setColor('FFF000');
         embed.setDescription(help);
-        embed.setTitle('Lista komend');
 
         message.author.send(embed).then(privateMessage => {
             message.reply('wysłano pomoc poprzez wiadomość prywatną!');

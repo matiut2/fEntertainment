@@ -36,7 +36,7 @@ module.exports = async (message) => {
         }
 
         const embed = new Discord.RichEmbed();
-        embed.setAuthor('fEntertainment', 'https://cdn.fcraft.pl/logo/150px/v2.2.png');
+        embed.setAuthor('Rzut kostką', 'https://wiki.fcraft.pl/images/0/00/Wolność.png');
         embed.setColor('FFF000');
         embed.addField('Rzuty', rolls, true);
         embed.addField('Strony', sides, true);

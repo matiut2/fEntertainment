@@ -22,7 +22,7 @@ module.exports = async (message) => {
         } else {
             apiClient.globalPlayer(args[1]).then(async (player) => {
                 const embed = new Discord.RichEmbed();
-                embed.setAuthor('fEntertainment', 'https://cdn.fcraft.pl/logo/150px/v2.2.png');
+                embed.setAuthor('Informacje o graczu', 'https://wiki.fcraft.pl/images/e/e3/W%C5%82asno%C5%9B%C4%87.png');
                 embed.setColor('FFF000');
                 embed.setThumbnail(`https://api.fcraft.pl/player/${args[1]}/head?size=16`);
                 embed.addField('Gracz', utils.escapeMarkdown(args[1]), true);

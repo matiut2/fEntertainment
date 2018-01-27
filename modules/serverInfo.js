@@ -19,7 +19,7 @@ module.exports = async (message) => {
 
         apiClient.info((args[1] ? args[1].toLowerCase() : 'hard')).then(server => {
             const embed = new Discord.RichEmbed();
-            embed.setAuthor('fEntertainment', 'https://cdn.fcraft.pl/logo/150px/v2.2.png');
+            embed.setAuthor('Informacje o serwerze', 'https://wiki.fcraft.pl/images/6/60/Survival.png');
             embed.setColor('FFF000');
             embed.setThumbnail(server.logo.large);
             embed.addField('Serwer', (args[1] ? utils.capitalize(args[1].toLowerCase()) : 'Hard'), true);

@@ -16,16 +16,24 @@ module.exports = async (message) => {
         if(!isNaN(args[1])) {
             const userRolls = parseInt(args[1]);
 
-            if(userRolls > 1 && userRolls < 100) {
-                rolls = userRolls;
+            if(userRolls > 1) {
+                if(userRolls < 100) {
+                    rolls = userRolls;
+                } else {
+                    rolls = 99;
+                }
             }
         }
 
         if(!isNaN(args[2])) {
             const userSides = parseInt(args[2]);
 
-            if(userSides > 1 && userSides < 100) {
-                sides = userSides;
+            if(userSides > 1) {
+                if(userSides < 100) {
+                    sides = userSides;
+                } else {
+                    sides = 99;
+                }
             }
         }
 

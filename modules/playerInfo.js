@@ -25,10 +25,7 @@ module.exports = async (message) => {
                 embed.setAuthor('Informacje o graczu', 'https://wiki.fcraft.pl/images/e/e3/W%C5%82asno%C5%9B%C4%87.png');
                 embed.setColor('FFF000');
                 embed.setThumbnail(`https://api.fcraft.pl/player/${args[1]}/head?size=16`);
-
-                const nickname = await apiClient.resolverUuids([player.uuid]);
-                embed.addField('Gracz', utils.escapeMarkdown(nickname[player.uuid]), true);
-
+                embed.addField('Gracz', utils.escapeMarkdown(player.nick), true);
                 embed.addField('Konto', (player.premium.last ? 'Oryginalne' : 'Pirackie'), true);
                 embed.addField('Pierwsze wejście', moment(player.time.first * 1000).format('D.MM.YYYY H:mm'), true);
                 embed.addField('Ostatnie wejście', moment(player.time.last * 1000).format('D.MM.YYYY H:mm'), true);

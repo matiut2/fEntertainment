@@ -2,8 +2,10 @@
 
 const httpAsPromised = require('http-as-promised');
 
-module.exports = async (obj) => {
-    const message = obj.message, utils = obj.utils;
+module.exports = async (parameters) => {
+    const message = parameters.message;
+    const utils = parameters.utils;
+    
     const response = await httpAsPromised.get('https://api.skript.pl/server/mc.fcraft.pl/', { resolve: 'body' });
     const serverStatus = JSON.parse(response);
 
@@ -21,8 +23,7 @@ module.exports = async (obj) => {
 
         message.channel.send(embed);
     } else {
-        const embed = new Discord.RichEmbed();
-        embed.setAuthor('fEntertainment', 'https://cdn.fcraft.pl/logo/150px/v2.2.png');
+        const embed = utils.embed('Status serwera', 'economy');
         embed.setColor('FFF000');
         embed.addField('Status', 'Offline');
         embed.setFooter('Inne usługi: status.fDomain.pl');

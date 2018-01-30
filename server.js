@@ -21,7 +21,7 @@ for(const commandName in commands) {
 }
 
 client.on('ready', () => {
-    client.user.setActivity('!pomoc | v1.0.6');
+    client.user.setActivity('!pomoc | v1.1');
     console.log('Client is ready!');
 });
 

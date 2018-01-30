@@ -16,7 +16,7 @@ const commands = {
 };
 
 for (let name in commands) {
-    commands[name] = require(path.join(__dirname, 'modules', commands[name] + '.js'));
+    commands[name] = require(path.join(__dirname, 'commands', commands[name] + '.js'));
 }
 
 client.on('ready', () => {

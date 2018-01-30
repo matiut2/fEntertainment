@@ -1,20 +1,24 @@
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
-
 const Discord = require('discord.js');
-
-const cuboidInfo = require(path.join(__dirname, 'modules', 'cuboidInfo.js'));
-const diceRoll = require(path.join(__dirname, 'modules', 'diceRoll.js'));
-const help = require(path.join(__dirname, 'modules', 'help.js'));
-const playerInfo = require(path.join(__dirname, 'modules', 'playerInfo.js'));
-const serverInfo = require(path.join(__dirname, 'modules', 'serverInfo.js'));
-const status = require(path.join(__dirname, 'modules', 'status.js'));
-
-const config = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.json')));
+const path = require('path');
+const utils = require(path.join(__dirname, 'utils.js'));
 
 const client = new Discord.Client();
+
+const commands = {
+    help: 'help',
+    pomoc: 'help',
+    status: 'status',
+    gracz: 'playerInfo',
+    cuboid: 'cuboidInfo',
+    serwer: 'serverInfo',
+    rzut: 'diceRoll'
+};
+
+for(const name in commands) {
+    commands[name] = require(path.join(__dirname, 'commands', commands[name] + '.js'));
+}
 
 client.on('ready', () => {
     client.user.setActivity('!pomoc | v1.0.6');
@@ -23,34 +27,28 @@ client.on('ready', () => {
 
 client.on('message', message => {
     const args = message.content.split(/\s+/);
+    
+    if (args[0].startsWith('!')) {
+         const command = args[0].slice(1);
+         
+         if (command in commands) {
+             message.channel.startTyping();
 
-    switch(args[0].toLowerCase()) {
-        case '!pomoc':
-        case '!help':
-            message.channel.startTyping();
-            help(message);
-            break;
-        case '!status':
-            message.channel.startTyping();
-            status(message);
-            break;
-        case '!gracz':
-            message.channel.startTyping();
-            playerInfo(message);
-            break;
-        case '!cuboid':
-            message.channel.startTyping();
-            cuboidInfo(message);
-            break;
-        case '!serwer':
-            message.channel.startTyping();
-            serverInfo(message);
-            break;
-        case '!rzut':
-            message.channel.startTyping();
-            diceRoll(message);
-            break;
+             const commandParameters = {
+                 message: message,
+                 args: args.slice(1),
+                 utils: utils  
+             };
+
+             commands[command](commandParameters).then(() => {
+                message.channel.stopTyping();
+             }).catch(error => {
+                message.reply('wystąpił błąd!');
+                message.channel.stopTyping();
+                console.error(error);
+             });
+         }
     }
 });
 
-client.login(config.token);
+client.login(utils.config.token);

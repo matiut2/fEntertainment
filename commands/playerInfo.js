@@ -1,7 +1,5 @@
 'use strict';
 
-const Discord = require('discord.js');
-
 module.exports = async (obj) => {
     const message = obj.message, utils = obj.utils, args = obj.args;
 
@@ -9,9 +7,7 @@ module.exports = async (obj) => {
         message.reply('prawidłowe użycie: `!gracz <gracz>`!');
     } else {
         utils.api().globalPlayer(args[0]).then(async (player) => {
-            const embed = new Discord.RichEmbed();
-            embed.setAuthor('Informacje o graczu', 'https://wiki.fcraft.pl/images/e/e3/W%C5%82asno%C5%9B%C4%87.png');
-            embed.setColor('FFF000');
+            const embed = utils.embed('Informacje o graczu', 'property');
             embed.setThumbnail(`https://api.fcraft.pl/player/${args[0]}/head?size=16`);
             embed.addField('Gracz', utils.escapeMarkdown(player.nick), true);
             embed.addField('Konto', (player.premium.last ? 'Oryginalne' : 'Pirackie'), true);

@@ -1,6 +1,5 @@
 'use strict';
 
-const Discord = require('discord.js');
 const Random = require('random-js');
 
 module.exports = async (obj) => {
@@ -39,9 +38,7 @@ module.exports = async (obj) => {
         results.push(Random.integer(1, sides)(Random.engines.nativeMath));
     }
 
-    const embed = new Discord.RichEmbed();
-    embed.setAuthor('Rzut kostką', 'https://wiki.fcraft.pl/images/0/00/Wolność.png');
-    embed.setColor('FFF000');
+    const embed = utils.embed('Rzut kostką', 'freedom');
     embed.addField('Rzuty', rolls, true);
     embed.addField('Strony', sides, true);
     embed.addField('Otrzymane wyniki', results.join(', '));

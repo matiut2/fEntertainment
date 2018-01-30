@@ -1,7 +1,5 @@
 'use strict';
 
-const Discord = require('discord.js');
-
 module.exports = async (obj) => {
     const message = obj.message, utils = obj.utils, args = obj.args;
 
@@ -9,9 +7,7 @@ module.exports = async (obj) => {
         message.reply('prawidłowe użycie: `!cuboid <cuboid> [świat] [serwer]`!');
     } else {
         utils.api().cuboid((args[2] ? args[2].toLowerCase() : 'hard'), (args[1] ? args[1].toLowerCase() : 'world'), args[0].toLowerCase()).then(async (cuboid) => {
-            const embed = new Discord.RichEmbed();
-            embed.setAuthor('Informacje o cuboidzie', 'https://wiki.fcraft.pl/images/e/e3/Własność.png');
-            embed.setColor('FFF000');
+            const embed = utils.embed('Informacje o cuboidzie', 'property');
             embed.addField('Cuboid', utils.escapeMarkdown(cuboid.name));
             embed.addField('Świat', (args[1] ? utils.capitalize(args[1].toLowerCase()) : 'World'));
             embed.addField('Rodzaj', utils.capitalize(cuboid.type));

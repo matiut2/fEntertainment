@@ -1,7 +1,6 @@
 'use strict';
 
 const httpAsPromised = require('http-as-promised');
-const Discord = require('discord.js');
 
 module.exports = async (obj) => {
     const message = obj.message, utils = obj.utils;
@@ -9,9 +8,7 @@ module.exports = async (obj) => {
     const serverStatus = JSON.parse(response);
 
     if(serverStatus.online) {
-        const embed = new Discord.RichEmbed();
-        embed.setAuthor('Status serwera', 'https://wiki.fcraft.pl/images/5/52/Ekonomia.png');
-        embed.setColor('FFF000');
+        const embed = utils.embed('Status serwera', 'economy');
         embed.addField('Status', 'Online', true);
 
         if(serverStatus.players.list.length < 3) {

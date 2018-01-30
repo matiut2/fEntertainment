@@ -1,14 +1,10 @@
 'use strict';
 
-const Discord = require('discord.js');
-
 module.exports = async (obj) => {
     const srv = obj.args[0] ? obj.args[0].toLowerCase() : 'hard';
     const message = obj.message, utils = obj.utils;
     utils.api().info(srv).then(server => {
-        const embed = new Discord.RichEmbed();
-        embed.setAuthor('Informacje o serwerze', 'https://wiki.fcraft.pl/images/6/60/Survival.png');
-        embed.setColor('FFF000');
+        const embed = utils.embed('Informacje o serwerze', 'survival');
         embed.setThumbnail(server.logo.large);
         embed.addField('Serwer', utils.capitalize(srv), true);
         embed.addField('Wersja gry', server.version.minecraft.number, true);

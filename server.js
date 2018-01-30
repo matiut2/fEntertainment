@@ -1,9 +1,10 @@
 'use strict';
 
+const Discord = require('discord.js');
 const path = require('path');
-const utils = require(path.join(__dirname, 'utils.js'))
-const discord = require('discord.js');
-const client = new discord.Client();
+const utils = require(path.join(__dirname, 'utils.js'));
+
+const client = new Discord.Client();
 
 const commands = {
     help: 'help',
@@ -15,7 +16,7 @@ const commands = {
     rzut: 'diceRoll'
 };
 
-for (let name in commands) {
+for(const name in commands) {
     commands[name] = require(path.join(__dirname, 'commands', commands[name] + '.js'));
 }
 
@@ -26,24 +27,28 @@ client.on('ready', () => {
 
 client.on('message', message => {
     const args = message.content.split(/\s+/);
+    
     if (args[0].startsWith('!')) {
-         const cmd = args[0].slice(1)
-         if (cmd in commands) {
-             try {
-                 message.channel.startTyping();
-                 commands[cmd]({
-                     message: message,
-                     args: args.slice(1),
-                     utils: utils
-                 })
-             } catch(error) {
-                 message.reply('wystąpił błąd!');
-                 console.error(error);
-             } finally {
-                 message.channel.stopTyping();
-             }
+         const command = args[0].slice(1);
+         
+         if (command in commands) {
+             message.channel.startTyping();
+
+             const commandParameters = {
+                 message: message,
+                 args: args.slice(1),
+                 utils: utils  
+             };
+
+             commands[command](commandParameters).then(() => {
+                message.channel.stopTyping();
+             }).catch(error => {
+                message.reply('wystąpił błąd!');
+                message.channel.stopTyping();
+                console.error(error);
+             });
          }
     }
 });
 
-client.login(utils.config().token);
+client.login(utils.config.token);

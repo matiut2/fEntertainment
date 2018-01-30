@@ -1,39 +1,39 @@
 'use strict';
 
-const path = require('path'), fs = require('fs'), moment = require('moment'), discord = require('discord.js');
+const apifcraftpl = require('api-fcraft.pl');
+const Discord = require('discord.js');
+const fs = require('fs');
+const path = require('path');
+const moment = require('moment');
+
 const icons = {
     'freedom': 'https://wiki.fcraft.pl/images/0/00/Wolność.png',
     'property': 'https://wiki.fcraft.pl/images/e/e3/Własność.png',
     'economy': 'https://wiki.fcraft.pl/images/5/52/Ekonomia.png',
     'survival': 'https://wiki.fcraft.pl/images/6/60/Survival.png'
 };
-var api = null, config = null, assets = [];
+
+const api = new apifcraftpl(config.key);
+const assets = {};
+const config = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.js')));
+
+exports.api = api;
+exports.config = config;
 
 exports.embed = (name, icon) => {
     const embed = new discord.RichEmbed();
     embed.setAuthor(name, icons[icon]);
     embed.setColor('FFF000');
+    
     return embed;
-}
+};
 
-exports.asset = name => {
-    if (!(name in assets)) {
-        assets[name] = fs.readFileSync(path.join('assets', name), 'utf8');
+exports.asset = asset => {
+    if(!assets[asset]) {
+        assets[asset] = fs.readFileSync(path.join(__dirname, 'assets', asset), 'utf8');
     }
-    return assets[name];
-};
-
-exports.config = () => {
-    if (config == null) {
-        config = JSON.parse(fs.readFileSync('config.json'));
-    } return config;
-};
-
-exports.api = () => {
-    if (api == null) {
-        const apifcraftpl = require('api-fcraft.pl');
-        api = new apifcraftpl(exports.config().key);
-    } return api;
+    
+    return assets[asset];
 };
 
 exports.capitalize = text => {

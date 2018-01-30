@@ -1,12 +1,14 @@
 'use strict';
 
-module.exports = async (obj) => {
-    const message = obj.message, utils = obj.utils, args = obj.args;
+module.exports = async (parameters) => {
+    const message = parameters.message;
+    const utils = parameters.utils;
+    const args = parameters.args;
 
     if(!args[0]) {
         message.reply('prawidłowe użycie: `!cuboid <cuboid> [świat] [serwer]`!');
     } else {
-        utils.api().cuboid((args[2] ? args[2].toLowerCase() : 'hard'), (args[1] ? args[1].toLowerCase() : 'world'), args[0].toLowerCase()).then(async (cuboid) => {
+        utils.api.cuboid((args[2] ? args[2].toLowerCase() : 'hard'), (args[1] ? args[1].toLowerCase() : 'world'), args[0].toLowerCase()).then(async (cuboid) => {
             const embed = utils.embed('Informacje o cuboidzie', 'property');
             embed.addField('Cuboid', utils.escapeMarkdown(cuboid.name));
             embed.addField('Świat', (args[1] ? utils.capitalize(args[1].toLowerCase()) : 'World'));
@@ -27,26 +29,27 @@ module.exports = async (obj) => {
             let players = [];
 
             if(cuboid.owners[0]) {
-                const owners = Object.values(await utils.api().resolverUuids(cuboid.owners));
+                const owners = Object.values(await utils.api.resolverUuids(cuboid.owners));
                 players = [...players, ...owners];
                 embed.addField('Posiadacze', utils.escapeMarkdown(owners.join(', ')));
             }
 
             if(cuboid.members[0]) {
-                const members = Object.values(await utils.api().resolverUuids(cuboid.members));
+                const members = Object.values(await utils.api.resolverUuids(cuboid.members));
                 players = [...players, ...members];
                 embed.addField('Mieszkańcy', utils.escapeMarkdown(members.join(', ')));
             }
 
             if(cuboid.workers[0]) {
-                const workers = Object.values(await utils.api().resolverUuids(cuboid.workers));
+                const workers = Object.values(await utils.api.resolverUuids(cuboid.workers));
                 embed.addField('Pracownicy', utils.escapeMarkdown(workers.join(', ')));
             }
 
             let active = false;
 
             for(let i = 0; i < players.length; i++) {
-                const player = await utils.api().globalPlayer(players[i]);
+                const player = await utils.api.globalPlayer(players[i]);
+                
                 if(utils.isActive(player.time.last)) {
                     active = true;
                 }
@@ -56,7 +59,6 @@ module.exports = async (obj) => {
 
             message.channel.send(embed);
         }).catch(error => {
-            console.error(error);
             message.reply('nie można było uzyskać informacji nt. podanego cuboida!');
         });
     }

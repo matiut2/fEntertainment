@@ -1,12 +1,16 @@
 'use strict';
 
-module.exports = async (obj) => {
-    const srv = obj.args[0] ? obj.args[0].toLowerCase() : 'hard';
-    const message = obj.message, utils = obj.utils;
-    utils.api().info(srv).then(server => {
+module.exports = async (parameters) => {
+    const message = parameters.message;
+    const utils = parameters.utils;
+    const args = parameters.args;
+    
+    const serverName = (args[0] ? args[0].toLowerCase() : 'hard');
+    
+    utils.api.info(serverName).then(server => {
         const embed = utils.embed('Informacje o serwerze', 'survival');
         embed.setThumbnail(server.logo.large);
-        embed.addField('Serwer', utils.capitalize(srv), true);
+        embed.addField('Serwer', utils.capitalize(serverName), true);
         embed.addField('Wersja gry', server.version.minecraft.number, true);
 
         let version = `v${server.version.world.number}.${server.version.series.number}.${server.version.update.number}`;

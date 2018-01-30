@@ -1,7 +1,9 @@
 'use strict';
 
-module.exports = async (obj) => {
-    const message = obj.message, utils = obj.utils;
+module.exports = async (parameters) => {
+    const message = parameters.message;
+    const utils = parameters.utils;
+    
     const embed = utils.embed('Pomoc bota', 'survival');
     embed.setDescription(utils.asset('help.md'));
 

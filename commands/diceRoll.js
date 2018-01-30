@@ -2,8 +2,10 @@
 
 const Random = require('random-js');
 
-module.exports = async (obj) => {
-    const message = obj.message, utils = obj.utils, args = obj.args;
+module.exports = async (parameters) => {
+    const message = parameters.message;
+    const utils = parameters.utils;
+    const args = parameters.args;
 
     let rolls = 1;
     let sides = 6;

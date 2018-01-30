@@ -13,18 +13,18 @@ const icons = {
     'survival': 'https://wiki.fcraft.pl/images/6/60/Survival.png'
 };
 
-const api = new apifcraftpl(config.key);
 const assets = {};
-const config = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.js')));
+const config = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.json')));
+const api = new apifcraftpl(config.key);
 
 exports.api = api;
 exports.config = config;
 
 exports.embed = (name, icon) => {
-    const embed = new discord.RichEmbed();
+    const embed = new Discord.RichEmbed();
     embed.setAuthor(name, icons[icon]);
     embed.setColor('FFF000');
-    
+
     return embed;
 };
 
@@ -32,7 +32,7 @@ exports.asset = asset => {
     if(!assets[asset]) {
         assets[asset] = fs.readFileSync(path.join(__dirname, 'assets', asset), 'utf8');
     }
-    
+
     return assets[asset];
 };
 

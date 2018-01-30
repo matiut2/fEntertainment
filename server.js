@@ -16,8 +16,8 @@ const commands = {
     rzut: 'diceRoll'
 };
 
-for(const name in commands) {
-    commands[name] = require(path.join(__dirname, 'commands', commands[name] + '.js'));
+for(const commandName in commands) {
+    commands[commandName] = require(path.join(__dirname, 'commands', commands[commandName] + '.js'));
 }
 
 client.on('ready', () => {
@@ -27,17 +27,17 @@ client.on('ready', () => {
 
 client.on('message', message => {
     const args = message.content.split(/\s+/);
-    
-    if (args[0].startsWith('!')) {
-         const command = args[0].slice(1);
-         
-         if (command in commands) {
+
+    if(args[0].startsWith('!')) {
+         const command = args[0].slice(1).toLowerCase();
+
+         if(command in commands) {
              message.channel.startTyping();
 
              const commandParameters = {
                  message: message,
                  args: args.slice(1),
-                 utils: utils  
+                 utils: utils
              };
 
              commands[command](commandParameters).then(() => {

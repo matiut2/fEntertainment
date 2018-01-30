@@ -47,9 +47,9 @@ module.exports = async (parameters) => {
 
             let active = false;
 
-            for(let i = 0; i < players.length; i++) {
-                const player = await utils.api.globalPlayer(players[i]);
-                
+            for(const playerName in players) {
+                const player = await utils.api.globalPlayer(players[playerName]);
+
                 if(utils.isActive(player.time.last)) {
                     active = true;
                 }

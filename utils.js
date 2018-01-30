@@ -1,17 +1,25 @@
 'use strict';
 
-var api = null, config = null;
+const path = require('path'), fs = require('fs');
+var api = null, config = null, assets = [];
+
+exports.asset = name => {
+    if (!(name in assets)) {
+        assets[name] = fs.readFileSync(path.join('assets', name), 'utf8');
+    }
+    return assets[name];
+}
 
 exports.config = () => {
     if (config == null) {
-        config = JSON.parse(require('fs').readFileSync('config.json'));
+        config = JSON.parse(fs.readFileSync('config.json'));
     } return config;
 };
 
 exports.api = () => {
     if (api == null) {
         const apifcraftpl = require('api-fcraft.pl');
-        api = new apifcraftpl(config.key);
+        api = new apifcraftpl(exports.config().key);
     } return api;
 }
 

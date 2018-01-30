@@ -13,7 +13,7 @@ const commands = {
     cuboid: 'cuboidInfo',
     serwer: 'serverInfo',
     rzut: 'diceRoll'
-}
+};
 
 for (let name in commands) {
     commands[name] = require(path.join(__dirname, 'modules', commands[name] + '.js'));

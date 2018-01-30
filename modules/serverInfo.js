@@ -1,49 +1,32 @@
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
-
-const apifcraftpl = require('api-fcraft.pl');
 const Discord = require('discord.js');
 const moment = require('moment');
 
-const utils = require(path.join(__dirname, '..', 'utils.js'));
+module.exports = async (obj) => {
+    const srv = obj.args[0] ? obj.args[0].toLowerCase() : 'hard';
+    const message = obj.message, utils = obj.utils;
+    utils.api().info(srv).then(server => {
+        const embed = new Discord.RichEmbed();
+        embed.setAuthor('Informacje o serwerze', 'https://wiki.fcraft.pl/images/6/60/Survival.png');
+        embed.setColor('FFF000');
+        embed.setThumbnail(server.logo.large);
+        embed.addField('Serwer', utils.capitalize(srv), true);
+        embed.addField('Wersja gry', server.version.minecraft.number, true);
 
-const config = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'config.json')));
+        let version = `v${server.version.world.number}.${server.version.series.number}.${server.version.update.number}`;
 
-const apiClient = new apifcraftpl(config.key);
+        if(server.version.patch) {
+            version += `.${server.version.patch.number}`;
+        }
 
-module.exports = async (message) => {
-    try {
-        const args = message.content.split(/\s+/);
+        embed.addField('Wersja serwera', `[${version}](https://wiki.fCraft.pl/${version})`, true);
+        embed.addField('Nazwa aktualizacji', server.version.update.name, true);
+        embed.addField('Ostatnia aktualizacja', moment((server.version.patch ? server.version.patch.time * 1000 : server.version.update.time * 1000)).format('D.MM.YYYY'), true);
+        embed.addField('Ostatnia zmiana mapy', moment(server.version.world.time * 1000).format('D.MM.YYYY'), true);
 
-        apiClient.info((args[1] ? args[1].toLowerCase() : 'hard')).then(server => {
-            const embed = new Discord.RichEmbed();
-            embed.setAuthor('Informacje o serwerze', 'https://wiki.fcraft.pl/images/6/60/Survival.png');
-            embed.setColor('FFF000');
-            embed.setThumbnail(server.logo.large);
-            embed.addField('Serwer', (args[1] ? utils.capitalize(args[1].toLowerCase()) : 'Hard'), true);
-            embed.addField('Wersja gry', server.version.minecraft.number, true);
-
-            let version = `v${server.version.world.number}.${server.version.series.number}.${server.version.update.number}`;
-
-            if(server.version.patch) {
-                version += `.${server.version.patch.number}`;
-            }
-
-            embed.addField('Wersja serwera', `[${version}](https://wiki.fCraft.pl/${version})`, true);
-            embed.addField('Nazwa aktualizacji', server.version.update.name, true);
-            embed.addField('Ostatnia aktualizacja', moment((server.version.patch ? server.version.patch.time * 1000 : server.version.update.time * 1000)).format('D.MM.YYYY'), true);
-            embed.addField('Ostatnia zmiana mapy', moment(server.version.world.time * 1000).format('D.MM.YYYY'), true);
-
-            message.channel.send(embed);
-        }).catch(error => {
-            message.reply('nie można było uzyskać informacji nt. podanego serwera!');
-        });
-    } catch(error) {
-        message.reply('wystąpił błąd!');
-        console.error(error);
-    } finally {
-        message.channel.stopTyping();
-    }
+        message.channel.send(embed);
+    }).catch(error => {
+        message.reply('nie można było uzyskać informacji nt. podanego serwera!');
+    });
 };

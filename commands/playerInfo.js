@@ -1,7 +1,6 @@
 'use strict';
 
 const Discord = require('discord.js');
-const moment = require('moment');
 
 module.exports = async (obj) => {
     const message = obj.message, utils = obj.utils, args = obj.args;
@@ -16,11 +15,10 @@ module.exports = async (obj) => {
             embed.setThumbnail(`https://api.fcraft.pl/player/${args[0]}/head?size=16`);
             embed.addField('Gracz', utils.escapeMarkdown(player.nick), true);
             embed.addField('Konto', (player.premium.last ? 'Oryginalne' : 'Pirackie'), true);
-            embed.addField('Pierwsze wejście', moment(player.time.first * 1000).format('D.MM.YYYY H:mm'), true);
-            embed.addField('Ostatnie wejście', moment(player.time.last * 1000).format('D.MM.YYYY H:mm'), true);
+            embed.addField('Pierwsze wejście', utils.datetime(player.time.first), true);
+            embed.addField('Ostatnie wejście', utils.datetime(player.time.last), true);
 
-            const isActive = moment(player.time.last * 1000).isSameOrAfter(moment().subtract(30, 'days'));
-            embed.addField('Aktywny', (isActive ? 'Tak' : 'Nie'), true);
+            embed.addField('Aktywny', (utils.isActive(player.time.last) ? 'Tak' : 'Nie'), true);
 
             const bans = await utils.api().banList();
 

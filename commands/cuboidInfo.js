@@ -1,7 +1,6 @@
 'use strict';
 
 const Discord = require('discord.js');
-const moment = require('moment');
 
 module.exports = async (obj) => {
     const message = obj.message, utils = obj.utils, args = obj.args;
@@ -52,9 +51,7 @@ module.exports = async (obj) => {
 
             for(let i = 0; i < players.length; i++) {
                 const player = await utils.api().globalPlayer(players[i]);
-                const isActive = moment(player.time.last * 1000).isSameOrAfter(moment().subtract(30, 'days'));
-
-                if(isActive) {
+                if(utils.isActive(player.time.last)) {
                     active = true;
                 }
             }

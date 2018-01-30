@@ -1,7 +1,6 @@
 'use strict';
 
 const Discord = require('discord.js');
-const moment = require('moment');
 
 module.exports = async (obj) => {
     const srv = obj.args[0] ? obj.args[0].toLowerCase() : 'hard';
@@ -22,8 +21,8 @@ module.exports = async (obj) => {
 
         embed.addField('Wersja serwera', `[${version}](https://wiki.fCraft.pl/${version})`, true);
         embed.addField('Nazwa aktualizacji', server.version.update.name, true);
-        embed.addField('Ostatnia aktualizacja', moment((server.version.patch ? server.version.patch.time * 1000 : server.version.update.time * 1000)).format('D.MM.YYYY'), true);
-        embed.addField('Ostatnia zmiana mapy', moment(server.version.world.time * 1000).format('D.MM.YYYY'), true);
+        embed.addField('Ostatnia aktualizacja', utils.date(server.version.patch ? server.version.patch.time : server.version.update.time), true);
+        embed.addField('Ostatnia zmiana mapy', utils.date(server.version.world.time), true);
 
         message.channel.send(embed);
     }).catch(error => {

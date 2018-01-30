@@ -5,6 +5,9 @@
     "bugs": "https://github.com/fCommunity/fEntertainment/issues",
     "license": "MIT",
     "author": "Jqmey <jqmey@outlook.com> (https://github.com/Jqmey)",
+    "contributors": [
+        "Libter <libter.pl@gmail.com> (https://github.com/Libter)"
+    ],
     "main": "server.js",
     "repository": "fCommunity/fEntertainment",
     "dependencies": {

@@ -2,6 +2,8 @@
 
 const Discord = require('discord.js');
 const path = require('path');
+
+const descriptionStatus = require(path.join(__dirname, 'modules', 'descriptionStatus.js'));
 const utils = require(path.join(__dirname, 'utils.js'));
 
 const client = new Discord.Client();
@@ -22,6 +24,19 @@ for(const commandName in commands) {
 
 client.on('ready', () => {
     client.user.setActivity('!pomoc | v1.1');
+
+    descriptionStatus({
+        utils,
+        client
+    });
+
+    setInterval(() => {
+        descriptionStatus({
+            utils,
+            client
+        });
+    }, 1 * 60 * 1000);
+
     console.log('Client is ready!');
 });
 

@@ -6,7 +6,7 @@ module.exports = async (parameters) => {
     const message = parameters.message;
     const utils = parameters.utils;
 
-    const mentionedUser = message.mentions.users.first()
+    const mentionedUser = message.mentions.users.first();
     let user = message.author;
 
     if(mentionedUser) {

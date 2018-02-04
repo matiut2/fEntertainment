@@ -33,12 +33,12 @@ module.exports = async (parameters) => {
 
         if(user) {
             await rethinkdb.table('users').get(message.author.id).update({
-                points: user.points + gainedPoints
+                points: Number(user.points) + Number(gainedPoints)
             }).run(utils.database);
         } else {
             await rethinkdb.table('users').insert({
                 id: message.author.id,
-                points: gainedPoints
+                points: Number(gainedPoints)
             }).run(utils.database);
         }
     } catch(error) {

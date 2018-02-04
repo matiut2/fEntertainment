@@ -9,3 +9,7 @@
 
 **Rozrywkowe**
 `!rzut [liczba rzutów] [liczba ścian]` - rzuca kostką i wyświetla wyniki
+
+**System poziomów**
+`!użytkownik [wzmianka]` - wyświetla informacje o użytkowniku
+`!ranking` - wyświetla ranking użytkowników

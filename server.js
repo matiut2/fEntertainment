@@ -3,8 +3,10 @@
 const Discord = require('discord.js');
 const path = require('path');
 
-const descriptionStatus = require(path.join(__dirname, 'modules', 'descriptionStatus.js'));
 const utils = require(path.join(__dirname, 'utils.js'));
+
+const descriptionStatus = require(path.join(__dirname, 'modules', 'descriptionStatus.js'));
+const levelsGain = require(path.join(__dirname, 'modules', 'levelsGain.js'));
 
 const client = new Discord.Client();
 
@@ -15,7 +17,9 @@ const commands = {
     gracz: 'playerInfo',
     cuboid: 'cuboidInfo',
     serwer: 'serverInfo',
-    rzut: 'diceRoll'
+    rzut: 'diceRoll',
+    'użytkownik': 'userInfo',
+    ranking: 'usersRanking'
 };
 
 for(const commandName in commands) {
@@ -41,7 +45,12 @@ client.on('ready', () => {
 });
 
 client.on('message', message => {
-    const args = message.content.split(/\s+/);
+    levelsGain({
+        message,
+        utils
+    });
+
+    const args = message.content.trim().split(/\s+/);
 
     if(args[0].startsWith('!')) {
          const command = args[0].slice(1).toLowerCase();

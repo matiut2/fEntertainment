@@ -4,6 +4,7 @@ const apifcraftpl = require('api-fcraft.pl');
 const Discord = require('discord.js');
 const fs = require('fs');
 const path = require('path');
+const rethinkdb = require('rethinkdb');
 const moment = require('moment');
 
 const icons = {
@@ -16,6 +17,17 @@ const icons = {
 const assets = {};
 const config = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.json')));
 const api = new apifcraftpl(config.key);
+
+rethinkdb.connect({
+    host: config.database.host,
+    port: config.database.port,
+    db: config.database.database,
+    user: config.database.user.name,
+    password: config.database.user.password
+}).then(connection => {
+    exports.database = connection;
+    console.log('Database is ready!');
+});
 
 exports.api = api;
 exports.config = config;
@@ -55,3 +67,7 @@ exports.datetime = timestamp => {
 exports.isActive = timestamp => {
     return moment(timestamp * 1000).isSameOrAfter(moment().subtract(30, 'days'));
 };
+
+exports.pointsToLevels = points => {
+    return Math.floor(points / 100);
+}

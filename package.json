@@ -15,7 +15,8 @@
         "discord.js": "^11.3.0",
         "http-as-promised": "^2.0.1",
         "moment": "^2.20.1",
-        "random-js": "^1.0.8"
+        "random-js": "^1.0.8",
+        "rethinkdb": "^2.3.3"
     },
     "engines": {
         "node": ">=8.9.4"

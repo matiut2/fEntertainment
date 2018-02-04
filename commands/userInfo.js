@@ -13,7 +13,7 @@ module.exports = async (parameters) => {
         user = mentionedUser;
     }
 
-    const userInfo = await rethinkdb.table('users').get(message.author.id).run(utils.database);
+    const userInfo = await rethinkdb.table('users').get(user.id).run(utils.database);
     const points = (userInfo ? userInfo.points : 0);
     const levels = utils.pointsToLevels(points);
 
@@ -21,7 +21,7 @@ module.exports = async (parameters) => {
     embed.setThumbnail(user.displayAvatarURL);
     embed.addField('Użytkownik', user.tag);
     embed.addField('Poziom', levels, true);
-    embed.addField('Punkty', points - levels * 100, true);
+    embed.addField('Punkty', points - (levels * 100), true);
 
     message.channel.send(embed);
 };

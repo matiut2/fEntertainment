@@ -9,10 +9,10 @@ module.exports = async (parameters) => {
     if(!message.guild) {
         message.reply('tej komendy można używać tylko w serwerach!');
     } else {
-        const usersCursor = await rethinkdb.table('users').orderBy({index: 'points'}).run(utils.database);
-        const users = await usersCursor.toArray();
+        const usersCursor = await rethinkdb.table('users').run(utils.database);
+        const users = (await usersCursor.toArray()).sort((a, b) => b.points - a.points);
 
-        const embed = utils.embed('Ranking użytkowników', 'economy')
+        const embed = utils.embed('Ranking użytkowników', 'economy');
 
         for(let i = 0; i < 3; i++) {
             if(users[i]) {

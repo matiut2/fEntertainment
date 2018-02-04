@@ -27,7 +27,7 @@ for(const commandName in commands) {
 }
 
 client.on('ready', () => {
-    client.user.setActivity('!pomoc | v1.1.1');
+    client.user.setActivity('!pomoc | v1.2.0');
 
     descriptionStatus({
         utils,

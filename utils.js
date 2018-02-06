@@ -69,5 +69,5 @@ exports.isActive = timestamp => {
 };
 
 exports.pointsToLevels = points => {
-    return Math.floor(points / 100);
+    return Math.floor(Math.sqrt(points) / 5);
 }

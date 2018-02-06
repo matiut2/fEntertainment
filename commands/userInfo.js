@@ -21,7 +21,7 @@ module.exports = async (parameters) => {
     embed.setThumbnail(user.displayAvatarURL);
     embed.addField('Użytkownik', user.tag);
     embed.addField('Poziom', levels, true);
-    embed.addField('Punkty', points - (levels * 100), true);
+    embed.addField('Punkty', points, true);
 
     message.channel.send(embed);
 };

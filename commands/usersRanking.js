@@ -14,7 +14,7 @@ module.exports = async (parameters) => {
 
         const embed = utils.embed('Ranking użytkowników', 'economy');
 
-        for(let i = 0; i < 3; i++) {
+        for(let i = 0; i < 5; i++) {
             if(users[i]) {
                 const member = message.guild.members.get(users[i].id);
 

@@ -18,14 +18,14 @@ module.exports = async (parameters) => {
         if(membersOnline.length < 10) return;
 
         const messageContent = message.content.trim();
-        if(messageContent.length <= 5) return;
+        if(messageContent.length < 5) return;
         if(messageContent.startsWith('!')) return;
 
         gainDisablement[message.author.id] = true;
 
         setTimeout(() => {
             gainDisablement[message.author.id] = false;
-        }, 240 / messageContent.length);
+        }, (240 / messageContent.length) * 1000);
 
         const gainedPoints = Random.integer(1, 3)(Random.engines.nativeMath);
 
